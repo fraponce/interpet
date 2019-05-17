@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Leeme: Interpet</title>
+	<style type="text/css">
+		.nota { color: gray; }
+	</style>
+</head>
+<body>
+	<h1>Leeme: Interpet</h1>
+	<h2>Objetivo</h2>
+	<p>
+		Una aplicación pensada para cumplir los requerimientos de la asignatura de IW, 
+		y además serviría para poner en contacto posibles cuidadores y propietarios de mascotas.
+	</p>
+	<p>
+		A todo el mundo le gustan las mascotas, no obstante no todo el mundo puede encargarse de ellas siempre,
+		para ello hemos diseñado una página de contactos con ese interés en particular. Esta permitira que distintos
+		cuidadores ofrezcan sus servicios a cualquier propietario que las necesite.
+	</p>
+	<p>
+		Tanto los cuidadores como los propietarios podrán valorar al otro según su labor o su trato en general, esto
+		servira para que el resto de usuarios sepa que esperarse. Llegando incluso a poder denunciar malas conductas
+		para que los administradores pueda expulsar al infractor.
+	</p>
+	<p>
+		Soporta los siguientes roles:
+		<ul>
+		<li>
+		El <b>administrador</b> (usuario: a, clave: a) puede ver todas las denuncias realizadas, incluyendo el chat
+		de la propia negociación asociada a esta y actuar en consecuencia.
+		<li>		
+		Un <b>usuario</b> (usuario: p, clave: p) podra actuar tanto de cuidador como de propietario. Pudiendo ofrecer sus servicios
+		o solicitar un cuidador.
+		<li>
+		</ul>
+	</p>
+	<h2>Base de datos</h2>
+		<p class="nota">Generado con <a href="https://www.dbdesigner.net/designer/schema/new">db designer</a>; 
+		</p>
+		
+		<img src="src/main/resources/static/img/schema.png" alt="esquema de la BD">
+	
+	<h2>Vistas</h2>
+		<ul>
+		<li><a href="http://localhost:8080/">Indice</a> - vista inicial. Permite especificar una clase, o hacer login 
+		(esquina superior derecha). 
+		<li><a href="http://localhost:8080/segar">Segar</a> - vista del administrador. 
+		Permite administrar las denuncias, y acceder a las negociaciones.
+		<li><a href="http://localhost:8080/perfil">Perfil</a> - vista del usuario. Permite modificar sus datos.
+		<li><a href="http://localhost:8080/chat">Chat</a> - vista para la negociación entre propietario y cuidador. Contiene la opción de 
+		confirmar el trabajo.
+		<li><a href="http://localhost:8080/creardenuncia">Crear Denuncia</a> - vista que permite a los usuarios denunciar a otros con los 
+		que ha interactuado por su mala praxis.
+		<li><a href="http://localhost:8080/crearofertas">Crear Oferta</a> -vista que permite crear una petición de trabajo.
+		<li><a href="http://localhost:8080/ofertas">Ofertas</a> - vista que contiene un tablón de anuncios que contiene las ofertas existentes e información pertinente.
+		<li><a href="http://localhost:8080/misofertas">Mis ofertas</a> - vista que contiene las ofertas realizadas por el usuario registrado e información pertinente.
+		<li><a href="http://localhost:8080/registros">Registros</a> -  vista para registrarse como nuevo usuario.
+		</ul>
+	<h2>Recursos</h2>
+		<ul>
+		<li><a href="src/main/resources/static/img/logo.png"/>Logotipo, obtenido de alguna parte</ul>
+</body>
+</html>

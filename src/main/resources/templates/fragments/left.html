@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html 
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+	<title>Left fragment - rest intentionally left empty</title>
+</head>
+<body>
+	<div id="sidebar-left" th:fragment="left">
+		<h3>Navegación</h3>
+		<ul>
+			<li><a th:href="@{/indice}">Inicio</a></li>
+			<li class="logx" 
+			th:if="${#authorization.expression('hasRole(''ROLE_USER'') OR hasRole(''ROLE_ADMIN'')')}" 
+			><a th:href="@{/misofertas}">Mis anuncios</a></li>
+			<li><a th:href="@{/ofertas}">Tablón de anuncios</a></li>
+			<li class="logx" 
+			th:if="${#authorization.expression('hasRole(''ROLE_USER'') OR hasRole(''ROLE_ADMIN'')')}" 
+			><a th:href="@{/crearofertas}">Crear anuncio</a></li>
+			<li class="logx" 
+			th:if="${#authorization.expression('hasRole(''ROLE_USER'') OR hasRole(''ROLE_ADMIN'')')}" 
+			><a th:href="@{/listachats}">Mis Chats</a></li>
+			<li class="logx" 
+			th:if="${#authorization.expression('hasRole(''ROLE_USER'') OR hasRole(''ROLE_ADMIN'')')}" 
+			><a th:href="@{/creardenuncia}">Denunciar</a></li>
+			<li class="logx" 
+			th:if="${#authorization.expression('hasRole(''ROLE_USER'') OR hasRole(''ROLE_ADMIN'')')}" 
+			><a th:href="@{/valorar}">Valorar</a></li>
+
+			<li class="logx" 
+			th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}" 
+			><a th:href="@{/segar}">Administrar</a></li>
+		</ul>
+	</div>
+</body>
+</html>
+

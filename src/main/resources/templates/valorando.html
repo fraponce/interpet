@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html 
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="fragments/head.html :: header">
+	<meta charset="utf-8">
+	<title>Title goes here</title>
+	<link rel="stylesheet" th:href="@{/css/main.css}" href="../static/css/main.css" type="text/css"/>
+</head>
+<body>
+
+
+	<nav th:replace="fragments/nav.html :: nav">
+		Nav goes here
+	</nav>
+	<div>
+		<div th:replace="fragments/left.html :: left">
+			menu de paginas
+		</div>
+		
+		
+			
+		<h4>Valore su experiencia</h4>
+		<!--En general, tanto para los anuncio que yo hago, como para las que busco por si quiero cuidar yo,
+		haría una pag muy parecida donde te deje filtrar por algún campo y el resto de la pag sea solo ver los resultados.
+		En el caso de que esté viendo los anuncios creadas por mi, cada solicitud tendra la opción de hablar con quien la haya aceptado
+		y habrá un boton para crear una nueva.
+		En el caso de que vea anuncios de otras personas, cada solicitud tendra un boton para "aceptarla" lo que abriria un chat con el propietario-->
+		<form action="" method="POST">
+			<fieldset>
+				<div class="grupo-control"><label th:text = "|Trabajo: ${oferta.nombre}|"></label></div>
+				<div class="grupo-control"><label>Valoración:</label> <input class="control" type="text" name="valor" /><br /></div>
+				<div class="grupo-control"><label>Comentarios:</label> <input class="control" type="text" name="descripcion" /><br /></div>
+				<div class="grupo-control"><button type="submit" name="enviar">Enviar</button></div>
+				
+				<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />	
+			</fieldset>
+		</form>
+	</div>
+</body>
+</html>

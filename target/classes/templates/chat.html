@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html 
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="fragments/head.html :: header">
+	<meta charset="utf-8">
+	<title>Title goes here</title>
+	<link rel="stylesheet" th:href="@{/css/main.css}" href="../static/css/main.css" type="text/css"/>
+</head>
+<body>
+	<nav th:replace="fragments/nav.html :: nav">
+		Nav goes here
+	</nav>
+	
+	<div class="container">
+	 <div th:replace="fragments/left.html :: left">
+			menu de paginas
+		</div>
+	<div class="main">
+	
+		<div class="starter-template">
+			<h1>Chat</h1>
+			<p class="lead">Ejemplo de uso de websockets</p>
+		
+			<textarea id="recibido" cols="80" rows="10"></textarea>
+			<input hidden id="chate" value = chate.id/> 
+			<form id="escrito">
+			<input id="texto" size="80" placeholder="escribe un mensage y pulsa enter para enviarlo"/>
+			</form>
+		</div>
+		
+		<div>
+			<button class="button1">Confirmar trabajo</button>
+			
+			<button class="button2">Añadir a Contactos</button>
+			
+		</div>
+
+	</div>
+	</div>
+	
+	<footer th:replace="fragments/footer.html :: footer">
+		Footer goes here
+	</footer>
+	
+	<script>
+	window.addEventListener('load', () => {
+		const forigen = document.getElementById("escrito");
+		const origen = document.getElementById("texto");
+		const destino = document.getElementById("recibido");
+		
+		
+		ws.receive = (t) => { 
+			destino.value += t;		
+		}	
+		const chat = document.getElementById("chate").value;
+		fetch(config.apiUrl + chat) // reemplazar con ID real (lo puedes meter en un hidden)
+			.then((r) => r.json())
+			.then((data) => destino.value += data.text);
+		
+		function envia() {
+			console.log("enviando ", origen.value);
+			enviado.value = "";
+			e.preventDefault();
+			return false;			
+		}
+		
+		escrito.onsubmit = envia.bind(escrito);
+	});
+	</script>
+</body>
+</html>

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html 
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="fragments/head.html :: head">
+	<meta charset="utf-8">
+	<title>Title goes here</title>
+	<link rel="stylesheet" th:href="@{/css/main.css}" href="../static/css/main.css" type="text/css"/>
+</head>
+<body>
+
+
+	<nav th:replace="fragments/nav.html :: nav">
+		Nav goes here
+	</nav>
+	<div>
+		<div th:replace="fragments/left.html :: left">
+			menu de paginas
+		</div>
+		
+		
+		<h2>Ofertas</h2>
+		
+		<!-- Añadir filtrado -->
+
+	<table class = "stable">
+	  <tr class = "str">
+	    <th class = "sth">Mascota</th>
+	    <th class = "sth">Contratante</th>
+	    <th class = "sth">Zona</th>
+	    <th class = "sth">Hora de inicio</th>
+	    <th class = "sth">Hora de fin</th>
+	    <th class = "sth">Sueldo</th>
+	    <th class = "sth">Enlace</th>
+	  </tr>
+	  <tr class = "str">
+	    <td class = "std">Rojo</td>
+	    <td class = "std">Ricardo</td>
+	    <td class = "std">Germany</td>
+	    <td class = "std">10/02/2019 18:00</td>
+	    <td class = "std">15/02/2019 18:00</td>
+	    <td class = "std">150 €</td>
+	    <td class = "std"><input type="button"></td>
+	  </tr>
+	  <tr class = "str">
+	    <td class = "std">Laika</td>
+	    <td class = "std">Francisco</td>
+	    <td class = "std">la luna</td>
+	    <td class = "std">01/02/2019 18:00</td>
+	    <td class = "std">31/12/2025 18:00</td>
+	    <td class = "std">1500 €</td>
+	    <td class = "std"><input type="button"></td>
+	  </tr>
+	  <tr class = "str">
+	    <td class = "std">Frodo</td>
+	    <td class = "std">Sam</td>
+	    <td class = "std">Mordor</td>
+	    <td class = "std">Tercera edad 18:00</td>
+	    <td class = "std">Cuarta edad 18:00</td>
+	    <td class = "std">anillo mu chulo</td>
+	    <td class = "std"><input type="button"></td>
+	  </tr>
+	  <tr class = "str">
+	    <td class = "std">Koala</td>
+	    <td class = "std">Mandingo</td>
+	    <td class = "std">Australia</td>
+	    <td class = "std">14/02/2019 18:00</td>
+	    <td class = "std">14/02/2019 18:01</td>
+	    <td class = "std">1 €</td>
+	    <td class = "std"><input type="button"></td>
+	  </tr>
+	  <tr class = "str">
+	   	<td class = "std">Epona</td>
+	    <td class = "std">Link</td>
+	    <td class = "std">Hyrule</td>
+	    <td class = "std">10/02/2019 18:00</td>
+	    <td class = "std">10/02/2026 18:00</td>
+	    <td class = "std">Trifuerza del poder</td>
+	    <td class = "std"><input type="button"></td>
+	  </tr>
+	  <tr class = "str">
+	    <td class = "std">Mewtwo</td>
+	    <td class = "std">Giovanni</td>
+	    <td class = "std">Cueva Celesta</td>
+	    <td class = "std">27/02/1996 18:00</td>
+	    <td class = "std">12/09/1998 18:00</td>
+	    <td class = "std">Master ball</td>
+	    <td class = "std"><input type="button"></td>
+	  </tr>
+	</table>
+	</div>
+</body>
+</html>

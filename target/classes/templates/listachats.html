@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="fragments/head.html :: header">
+<meta charset="utf-8">
+<title>Title goes here</title>
+<link rel="stylesheet" th:href="@{/css/main.css}"
+	href="../static/css/main.css" type="text/css" />
+</head>
+<body>
+
+
+	<nav th:replace="fragments/nav.html :: nav">Nav goes here</nav>
+	<div>
+		<div th:replace="fragments/left.html :: left">menu de paginas</div>
+
+
+		<h2>Chats de tus anuncios</h2>
+
+		<table class="stable">
+			<thead>
+				<tr class="str">
+					<th class="sth">Aspirante</th>
+					<th class="sth">Trabajo</th>
+					<th class="sth">Chat</th>
+					<th class="sth">Exaltación</th>
+				</tr>
+			</thead>
+			<tbody>
+				<!-- <tr class = "str" th:if="${ofertas.empty}">
+            <td colspan="2"> No hay ofertas </td>
+        </tr> -->
+				<tr class="str" th:class="|elim${o.oferta.id}|" th:each="o: ${poseedorchats}">
+					<td class="std"><a
+						th:href="@{/usuario/{id}(id=${o.cliente.id})}"
+						th:text=${o.cliente.login}>UnId</a></td>
+					<td class="std"><a
+						th:href="@{/oferta/{id}(id=${o.oferta.id})}"
+						th:text=${o.oferta.nombre}>UnId</a></td>
+					<td class="std"><a
+						th:href="@{/chat/{id}(id=${o.id})}"
+						th:text=Chatear>UnId</a></td>
+					<td class="std"><button class="exaltamatic"
+							th:data-target="${o.id}" th:data-target2="${o.oferta.id}" type="button">X</button></td>
+				</tr>
+			</tbody>
+		</table>
+
+		<h2>Trabajos en los que estás interesado</h2>
+
+		<table class="stable">
+			<thead>
+				<tr class="str">
+					<th class="sth">Poseedor</th>
+					<th class="sth">Trabajo</th>
+					<th class="sth">Chat</th>
+				</tr>
+			</thead>
+			<tbody>
+				<!-- <tr class = "str" th:if="${ofertas.empty}">
+            <td colspan="2"> No hay ofertas </td>
+        </tr> -->
+				<tr th:class="str" th:each="o: ${aspirantechats}">
+					<td class="std"><a
+						th:href="@{/usuario/{id}(id=${o.oferta.solicitante.id})}"
+						th:text=${o.oferta.solicitante.login}>UnId</a></td>
+					<td class="std"><a
+						th:href="@{/oferta/{id}(id=${o.oferta.id})}"
+						th:text=${o.oferta.nombre}>UnId</a></td>
+					<td class="std"><a
+						th:href="@{/chat/{id}(id=${o.id})}"
+						th:text=Chatear>UnId</a></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<script>
+	    document.querySelectorAll(".exaltamatic").forEach((e) => instalaExaltacion(e))
+
+		function instalaExaltacion(e) {
+		   console.log(e);
+		   e.onclick = () => exaltaDeVerdad(e);   
+		}
+	    
+	    function exaltaDeVerdad(e) {
+	       const aspirante = e.dataset.target;
+	       const oferta= e.dataset.target2;
+	       console.log("aspirante", e.dataset.target);
+	       
+	   		const headers = {
+	   			"Content-Type": "application/json",
+	   			"X-CSRF-TOKEN": config.csrf.value
+	   		};
+	       
+	        fetch(config.exaltarUrl + aspirante, {
+				method: 'POST',
+				headers: headers,
+			}).then(response => document.querySelectorAll(".elim"+oferta).forEach((e) => e.remove()));
+			return false;
+	       
+	    }
+	</script>
+</body>
+</html>

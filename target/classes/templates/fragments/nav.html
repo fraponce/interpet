@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html 
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+	<title>Nav fragment - rest intentionally left empty</title>
+</head>
+<body>
+	<nav th:fragment="nav">
+		<a class="logo" href="" th:href="@{/}"></a>
+		<span class="sitename">Interpet</span>
+		
+		<a class="logx" 
+			th:if="${#authorization.expression('hasRole(''ROLE_USER'') OR hasRole(''ROLE_ADMIN'')')}" 
+			th:href="@{/perfil}" th:text="|perfil de ${session.u.login}|" href="/perfil">perfil de X</a>
+		<a class="logx" 
+			th:if="${#authorization.expression('hasRole(''ROLE_USER'') OR hasRole(''ROLE_ADMIN'')')}" 
+			th:href="@{/logout}" href="/logout">logout</a>
+		<th:block th:unless="${session.u}">
+		<a class="logx" 
+			th:href="@{/login}" href="/login">login</a>		
+		<a class="logox" 
+			th:href="@{/registro}" href="/registro">registro</a>
+		<div class="debug" th:if="${application.debug}">
+				<form th:action="@{/login}" method="post">
+					<input type="hidden" name="username" value="a">
+					<input type="hidden" name="password" value="a">
+					<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+					<button type="submit">a</button>
+  				</form>				
+
+		</div>
+		</th:block>
+			
+	</nav>
+</body>
+</html>

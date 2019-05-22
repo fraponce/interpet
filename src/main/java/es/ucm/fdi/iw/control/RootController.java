@@ -163,6 +163,7 @@ public class RootController {
 			Chat c = new Chat();
 			c.setCliente(u);
 			c.setOferta(o);
+			c.setConversacion("cuidado una cabra salida");
 			entityManager.persist(c);
 			entityManager.flush();
 			addChatsToModel(model, u);

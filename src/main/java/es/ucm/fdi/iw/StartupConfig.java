@@ -20,6 +20,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import es.ucm.fdi.iw.control.RootController;
+import es.ucm.fdi.iw.model.Chat;
 import es.ucm.fdi.iw.model.Denuncia;
 import es.ucm.fdi.iw.model.Mascota;
 import es.ucm.fdi.iw.model.Oferta;
@@ -176,6 +177,10 @@ public class StartupConfig {
 			d1.setDescripcion("Ese wey profanó el honor de mi llama y ya no la puedo casar");
 			d1.setOferta(o3);
 			entityManager.persist(d1);
+			Chat c = new Chat();
+			c.setCliente(admin);
+			c.setOferta(o4);
+			c.setConversacion("Por aqui andam... nos ataca un robot tiranosauros Rex salvese quien pueda...");
 		}
 	}
 }

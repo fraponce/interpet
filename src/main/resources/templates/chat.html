@@ -23,6 +23,7 @@
 			<p class="lead">Ejemplo de uso de websockets</p>
 		
 			<textarea id="recibido" cols="80" rows="10"></textarea>
+			<input hidden id="chate" value = chate.id/> 
 			<form id="escrito">
 			<input id="texto" size="80" placeholder="escribe un mensage y pulsa enter para enviarlo"/>
 			</form>
@@ -48,11 +49,12 @@
 		const origen = document.getElementById("texto");
 		const destino = document.getElementById("recibido");
 		
+		
 		ws.receive = (t) => { 
 			destino.value += t;		
 		}	
-		
-		fetch(config.apiUrl + "5") // reemplazar con ID real (lo puedes meter en un hidden)
+		const chat = document.getElementById("chate").value;
+		fetch(config.apiUrl + chat) // reemplazar con ID real (lo puedes meter en un hidden)
 			.then((r) => r.json())
 			.then((data) => destino.value += data.text);
 		

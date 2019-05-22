@@ -37,7 +37,9 @@
 					<td class="std"><a
 						th:href="@{/oferta/{id}(id=${o.oferta.id})}"
 						th:text=${o.oferta.nombre}>UnId</a></td>
-					<td class="std"><button type="button">Chat</button></td>
+					<td class="std"><a
+						th:href="@{/chat/{id}(id=${o.id})}"
+						th:text=Chatear>UnId</a></td>
 					<td class="std"><button class="exaltamatic"
 							th:data-target="${o.id}" th:data-target2="${o.oferta.id}" type="button">X</button></td>
 				</tr>
@@ -65,7 +67,9 @@
 					<td class="std"><a
 						th:href="@{/oferta/{id}(id=${o.oferta.id})}"
 						th:text=${o.oferta.nombre}>UnId</a></td>
-					<td class="std"><button type="button">Chat</button></td>
+					<td class="std"><a
+						th:href="@{/chat/{id}(id=${o.id})}"
+						th:text=Chatear>UnId</a></td>
 				</tr>
 			</tbody>
 		</table>

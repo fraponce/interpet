@@ -73,9 +73,8 @@
 			fetch(config.apiUrl + chat, {
 				method: 'POST',
 				headers: headers,
-				body: JSON.stringify({text: origen.value})
+				body: JSON.stringify({texto: origen.value})
 			}).then(response => console.log(response));
-
 			return false;			
 		}
 		

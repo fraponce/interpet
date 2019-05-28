@@ -131,7 +131,7 @@ public class RootController {
 	}
 	
 	
-	@GetMapping("/ofertas")
+	/*@GetMapping("/ofertas")
 	public String ofertas(Model model, HttpSession session) {
 		try{
 		Usuario u = (Usuario)session.getAttribute("u");
@@ -175,7 +175,7 @@ public class RootController {
 		}
 	}
 	
-	protected void addOfertasToModel(Model model, Usuario u) { /* Permite usar las queries en una redirección */
+	protected void addOfertasToModel(Model model, Usuario u) { // Permite usar las queries en una redirección 
 		log.info("Usuario en ListaChats es {}",  u.getLogin());
 		model.addAttribute("ofertas", entityManager
 				.createQuery("SELECT o FROM Oferta o WHERE o.enabled = true and o.solicitante.id <> :userId")
@@ -184,7 +184,7 @@ public class RootController {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public Chat getChat(long idOferta, long idUsuario) { /*Metodo para devolver solo uno o NULL*/
+	public Chat getChat(long idOferta, long idUsuario) { //Metodo para devolver solo uno o NULL
 		List<Chat> chats = entityManager.createQuery("SELECT o FROM Chat o WHERE o.oferta.enabled = true and o.oferta.id = :ofertaId and o.cliente.id = :userId")
 				.setParameter("ofertaId", idOferta)
 				.setParameter("userId", idUsuario)
@@ -249,7 +249,7 @@ public class RootController {
 		entityManager.persist(f);
 		
 		return misofertas(model, session);
-	}
+	}*/
 	
 	@PostMapping("/crearMascota")
 	@Transactional
@@ -274,7 +274,7 @@ public class RootController {
 		return perfil(model, session);
 	}
 	
-	@GetMapping("/misofertas")
+	/*@GetMapping("/misofertas")
 	public String misofertas(Model model, HttpSession session) {
 		Usuario u = (Usuario)session.getAttribute("u");
 		u = (Usuario)entityManager.find(Usuario.class,  u.getId());
@@ -286,8 +286,8 @@ public class RootController {
 				.getResultList());
 		return "misofertas";
 	}
-	
-	protected void addChatsToModel(Model model, Usuario u) { /* Permite usar las queries en una redirección */
+	*/
+	protected void addChatsToModel(Model model, Usuario u) { //Permite usar las queries en una redirección
 		log.info("Usuario en ListaChats es {}",  u.getLogin());
 		model.addAttribute("poseedorchats", entityManager
 				.createQuery("SELECT o FROM Chat o WHERE o.oferta.solicitante.id = :userIda and o.oferta.enabled = true")
@@ -304,7 +304,7 @@ public class RootController {
 		Usuario u = (Usuario)session.getAttribute("u");
 		u = (Usuario)entityManager.find(Usuario.class,  u.getId());
 		if(!u.getAbierto()) {return "baneado";}
-		addChatsToModel(model, u); /*Le pasamos las querys de listachats*/
+		addChatsToModel(model, u); //Le pasamos las querys de listachats
 		return "listachats";
 	}
 	
@@ -321,7 +321,7 @@ public class RootController {
 		entityManager.persist(o);
 		return "exaltao";
 	}
-	
+	/*
 	@GetMapping("/creardenuncia")
 	public String creardenuncia(Model model, HttpSession session) {
 		Usuario u = (Usuario)session.getAttribute("u");
@@ -443,5 +443,5 @@ public class RootController {
 		v.setDescripcion(descripcion);
 		entityManager.persist(v);
 		return valorar(model, session);
-	}
+	}*/
 }

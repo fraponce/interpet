@@ -44,8 +44,9 @@ public class ApiController {
 		// acaba de conectarse un usuario:
 		// devuelvele, en texto plano, lo que tiene que mostrar para empezar
 		model.addAttribute("chate", c);
+		return c.getConversacion();
 		//return "{\"text\" : \""+ c.getConversacion() +"\"}";
-		return "chat";
+		
 	}
 	
 	@PostMapping("/{id}")
@@ -62,8 +63,9 @@ public class ApiController {
 		if(!cliente && !solicitante) {
 			return "tu madre";
 		}
+		
 		// añado el texto al chat activo
-		c.setConversacion(c.getConversacion() + texto);
+		c.setConversacion(c.getConversacion() +"\n"+ texto);
 		// aviso al interlocutor, si está conectado, vía
 		String elOtroDelChat;
 		if(cliente) {

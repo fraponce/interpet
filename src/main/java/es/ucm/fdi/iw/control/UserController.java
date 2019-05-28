@@ -60,7 +60,7 @@ public class UserController {
 		return "usuario";
 	}
 	
-	@GetMapping("oferta/{id}")
+	/*@GetMapping("oferta/{id}")
 	public String oferta(Model model, @PathVariable long id, HttpSession session) {
 		Usuario u = (Usuario)session.getAttribute("u");
 		u = (Usuario)entityManager.find(Usuario.class,  u.getId());
@@ -69,7 +69,7 @@ public class UserController {
 		iwSocketHandler.sendText("a", "acaba de entrar " + u.getLogin());
 		model.addAttribute("o", entityManager.find(Oferta.class,  id));
 		return "oferta";
-	}
+	}*/
 	
 	@GetMapping("mascota/{id}")
 	public String mascota(Model model, @PathVariable long id, HttpSession session) {
@@ -81,5 +81,6 @@ public class UserController {
 		model.addAttribute("mas", entityManager.find(Mascota.class,  id));
 		return "mascota";
 	}
+	
 	
 }

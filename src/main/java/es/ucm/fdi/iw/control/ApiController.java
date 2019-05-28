@@ -19,7 +19,7 @@ import es.ucm.fdi.iw.model.Chat;
 import es.ucm.fdi.iw.model.Usuario;
 
 @RestController
-@RequestMapping("chat")
+@RequestMapping("api")
 public class ApiController {
 	
 	private static final Logger log = LogManager.getLogger(ApiController.class);

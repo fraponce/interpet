@@ -58,9 +58,10 @@ public class RootController {
 		return "indice";
 	}
 		
-	@GetMapping("/chat")
-	public String chat(HttpSession session, Model model, @RequestParam long id) {
+	@GetMapping("/chat/{id}")
+	public String chat(HttpSession session, Model model, @PathVariable long id) {
 		// importante: peticion tiene que pasarnos, y chat tiene que tener, la id del chat de alguna forma
+		model.addAttribute("chatId", ""+id);
 		return "chat";
 	}
 		

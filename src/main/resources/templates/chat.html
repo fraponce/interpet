@@ -25,7 +25,7 @@
 			<textarea id="recibido" cols="80" rows="10"></textarea>
 			<input type="hidden" id="chate" th:value="${chatId}"/>
 			<input type="hidden" id="usuario" th:value="${yo}"/>
-			<input type="hidden" id="aquel" th:value="${tu}"/>  
+			<input type="hidden" id="aquel" th:value="${tu}"/>
 			<form id="escrito" method="POST"  th:action="@{/api/{id}(id=${chatId})}">
 				<input id="texto" size="80" 
 					name="texto"
@@ -35,7 +35,7 @@
 		</div>
 		
 		<div>
-			<td class = "std"><button class="okmatic" th:data-target="${chatId}" type="button" >Aceptar trabajo</button></td>
+			<td class = "std" th:if="${cond}"><button class="okmatic" th:data-target="${chatId}" type="button" onclick="window.location='listachats';" >Aceptar trabajo</button></td>
 			
 			<button class="button2">Añadir a Contactos</button>
 			

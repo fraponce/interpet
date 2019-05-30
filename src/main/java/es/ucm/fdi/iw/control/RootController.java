@@ -68,13 +68,19 @@ public class RootController {
 		// importante: peticion tiene que pasarnos, y chat tiene que tener, la id del chat de alguna forma
 		model.addAttribute("chatId", ""+id);
 		Chat c = (Chat)entityManager.find(Chat.class, id);
+		if(!c.getOferta().getEnabled()) {
+			return "listachats";
+		}
 		Usuario u = (Usuario)session.getAttribute("u");
 		u = (Usuario)entityManager.find(Usuario.class,  u.getId());
 		model.addAttribute("yo", u.getLogin());
-		if(u.getId()== c.getCliente().getId())
+		if(u.getId()== c.getCliente().getId()) {
+			model.addAttribute("cond", false);
 			model.addAttribute("tu", c.getOferta().getSolicitante().getLogin());
-		else
+		}else{
+			model.addAttribute("cond", true);
 			model.addAttribute("tu", c.getCliente().getLogin());
+		}
 		return "chat";
 	}
 	

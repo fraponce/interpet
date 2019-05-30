@@ -67,9 +67,14 @@ public class RootController {
 	public String chat(HttpSession session, Model model, @PathVariable long id) {
 		// importante: peticion tiene que pasarnos, y chat tiene que tener, la id del chat de alguna forma
 		model.addAttribute("chatId", ""+id);
+		Chat c = (Chat)entityManager.find(Chat.class, id);
 		Usuario u = (Usuario)session.getAttribute("u");
 		u = (Usuario)entityManager.find(Usuario.class,  u.getId());
 		model.addAttribute("yo", u.getLogin());
+		if(u.getId()== c.getCliente().getId())
+			model.addAttribute("tu", c.getOferta().getSolicitante().getLogin());
+		else
+			model.addAttribute("tu", c.getCliente().getLogin());
 		return "chat";
 	}
 	

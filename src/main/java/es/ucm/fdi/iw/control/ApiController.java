@@ -52,7 +52,7 @@ public class ApiController {
 	@PostMapping("/{id}")
 	@Transactional
 	@ResponseBody
-	public String enviarMensaje(HttpSession session, @PathVariable long id, String texto) {
+	public String enviarMensaje(HttpSession session, @PathVariable long id,  String texto) {
 		Usuario u = (Usuario)session.getAttribute("u");
 		u = (Usuario)entityManager.find(Usuario.class,  u.getId());
 		if(!u.getAbierto()) {return "baneado";}
@@ -65,7 +65,7 @@ public class ApiController {
 		}
 		
 		// añado el texto al chat activo
-		c.setConversacion(c.getConversacion() +"\n"+ texto);
+		c.setConversacion(c.getConversacion() +"\n"+ u.getLogin() +": "+ texto);
 		// aviso al interlocutor, si está conectado, vía
 		String elOtroDelChat;
 		if(cliente) {

@@ -44,12 +44,16 @@ public class UserController {
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 	
+	public boolean checkBaneado(HttpSession session) {
+		Usuario u = (Usuario)session.getAttribute("u");
+		u = (Usuario)entityManager.find(Usuario.class,  u.getId());
+		return !u.getAbierto();
+	}
+	
 	@GetMapping("usuario/{id}")
 	public String usuario(Model model, @PathVariable long id, HttpSession session) {
-		Usuario ub = (Usuario)session.getAttribute("u");
-		ub = (Usuario)entityManager.find(Usuario.class,  ub.getId());
 		Usuario u = (Usuario)entityManager.find(Usuario.class,  id);
-		if(!ub.getAbierto()) {return "baneado";}
+		if(checkBaneado(session)) {return "baneado";}
 		model.addAttribute("conectado", u);
 		model.addAttribute("valoracion", entityManager
 				.createQuery("SELECT AVG(o.puntuacion) FROM Valoracion o WHERE o.premiado.id = :userId")
@@ -73,9 +77,7 @@ public class UserController {
 	
 	@GetMapping("mascota/{id}")
 	public String mascota(Model model, @PathVariable long id, HttpSession session) {
-		Usuario u = (Usuario)session.getAttribute("u");
-		u = (Usuario)entityManager.find(Usuario.class,  u.getId());
-		if(!u.getAbierto()) {return "baneado";}
+		if(checkBaneado(session)) {return "baneado";}
 		Mascota m = (Mascota)entityManager.find(Mascota.class,  id);
 		log.info("Mascota es {}",  m.getNombre());
 		model.addAttribute("mas", entityManager.find(Mascota.class,  id));

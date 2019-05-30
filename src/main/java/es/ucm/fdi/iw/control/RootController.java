@@ -51,7 +51,12 @@ public class RootController {
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 	
-
+	public boolean checkBaneado(HttpSession session) {
+		Usuario u = (Usuario)session.getAttribute("u");
+		u = (Usuario)entityManager.find(Usuario.class,  u.getId());
+		return !u.getAbierto();
+	}
+	
 	@GetMapping("/")
 	public String index(Model model) {
 		model.addAttribute("xs", "uno dos tres cuatro cinco".split(" "));
@@ -62,14 +67,29 @@ public class RootController {
 	public String chat(HttpSession session, Model model, @PathVariable long id) {
 		// importante: peticion tiene que pasarnos, y chat tiene que tener, la id del chat de alguna forma
 		model.addAttribute("chatId", ""+id);
+		Usuario u = (Usuario)session.getAttribute("u");
+		u = (Usuario)entityManager.find(Usuario.class,  u.getId());
+		model.addAttribute("yo", u.getLogin());
 		return "chat";
 	}
+	
+	@PostMapping("/chat/{id}")
+	@Transactional
+	public String chats(Model model, HttpSession session,   
+			@PathVariable long id) {
+		Chat c = (Chat)entityManager.find(Chat.class, id);
+		Oferta o = (Oferta)entityManager.find(Oferta.class, c.getOferta().getId());
+		Usuario u = (Usuario)entityManager.find(Usuario.class, c.getCliente().getId());
+		o.setEnabled(false);
+		o.setElegido(u);
+		entityManager.persist(o);
+		return "listachats";
+	}
+	
 		
 	@GetMapping("/peticion")
 	public String peticion(HttpSession session) {
-		Usuario u = (Usuario)session.getAttribute("u");
-		u = (Usuario)entityManager.find(Usuario.class,  u.getId());
-		if(!u.getAbierto()) {return "baneado";}
+		if(checkBaneado(session)) {return "baneado";}
 		return "peticion";
 	}
 	@GetMapping("/baneado")
@@ -80,9 +100,7 @@ public class RootController {
 	@GetMapping("/indice")
 	public String indice(HttpSession session) {
 		try {
-		Usuario u = (Usuario)session.getAttribute("u");
-		u = (Usuario)entityManager.find(Usuario.class,  u.getId());
-		if(!u.getAbierto()) {return "baneado";}
+		if(checkBaneado(session)) {return "baneado";}
 		return "indice";
 		}catch (NullPointerException e) {
 			return "indice";

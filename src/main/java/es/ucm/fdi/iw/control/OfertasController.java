@@ -53,7 +53,6 @@ public class OfertasController {
 	
 
 	
-	
 	@GetMapping("/ofertas")
 	public String ofertas(Model model, HttpSession session) {
 		try{

@@ -91,6 +91,7 @@
 	<table class = "stable">
     <thead>
         <tr class = "str">
+        	<th class = "sth"> Trabajo </th>
             <th class = "sth"> Mascota </th>
             <th class = "sth"> Contratante </th>
             <th class = "sth"> Zona </th>
@@ -106,8 +107,19 @@
             <td colspan="2"> No hay ofertas </td>
         </tr> -->
         <tr class = "str" th:each="o: ${ofertas}">
-        	<td class = "std"> <a th:href="@{/mascota/{id}(id=${o.mascota.id})}" th:text=${o.mascota.nombre}>UnId</a></td>
-        	<td class = "std"> <a th:href="@{/usuario/{id}(id=${o.solicitante.id})}" th:text=${o.solicitante.login}>UnId</a></td>
+        	<td class = "std">
+        		<span th:if="${#authorization.expression('hasRole(''ROLE_USER'') OR hasRole(''ROLE_ADMIN'')')}"> <a th:href="@{/oferta/{id}(id=${o.id})}" th:text=${o.nombre}>UnId</a></span> 
+        		<span th:unless="${#authorization.expression('hasRole(''ROLE_USER'') OR hasRole(''ROLE_ADMIN'')')}" th:text="${o.nombre}"> UnId sin Sesion</span>	
+        	</td>
+        	
+        	<td class = "std"> 
+        		<span th:if="${#authorization.expression('hasRole(''ROLE_USER'') OR hasRole(''ROLE_ADMIN'')')}"> <a th:href="@{/mascota/{id}(id=${o.mascota.id})}" th:text=${o.mascota.nombre}>UnId</a></span>
+        		<span th:unless="${#authorization.expression('hasRole(''ROLE_USER'') OR hasRole(''ROLE_ADMIN'')')}" th:text=${o.mascota.nombre}>UnId</span>
+        	</td>
+        	<td class = "std"> 
+        		<span th:if="${#authorization.expression('hasRole(''ROLE_USER'') OR hasRole(''ROLE_ADMIN'')')}"><a th:href="@{/usuario/{id}(id=${o.solicitante.id})}" th:text=${o.solicitante.login}>UnId</a></span>
+        		<span th:unless="${#authorization.expression('hasRole(''ROLE_USER'') OR hasRole(''ROLE_ADMIN'')')}" th:text=${o.solicitante.login}>UnId</span>
+        	</td>
         	<td class = "std" th:text=${o.zona}>UnId</td>
          	<td class = "std" th:text="${application.dateFormatter.format(o.inicio)}">UnId</td>
          	<td class = "std" th:text="${application.dateFormatter.format(o.fin)}">UnId</td>

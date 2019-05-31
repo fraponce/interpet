@@ -44,7 +44,7 @@ const ws = {
 } 
 
 window.addEventListener('load', () => {
-	if (config.socketUrl !== false) {
+	if (((typeof config) !== 'undefined') && (config.socketUrl !== false)) {
 		ws.initialize(config.socketUrl);
 	}
 });

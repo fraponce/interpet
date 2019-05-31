@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -49,10 +50,14 @@ public class ApiController {
 		
 	}
 	
+	private static final class LineaTexto {
+		public String texto;
+	}
+	
 	@PostMapping("/{id}")
 	@Transactional
 	@ResponseBody
-	public String enviarMensaje(HttpSession session, @PathVariable long id,  String texto) {
+	public String enviarMensaje(HttpSession session, @PathVariable long id, @RequestBody LineaTexto texto) {
 		Usuario u = (Usuario)session.getAttribute("u");
 		u = (Usuario)entityManager.find(Usuario.class,  u.getId());
 		if(!u.getAbierto()) {return "baneado";}
@@ -65,7 +70,7 @@ public class ApiController {
 		}
 		
 		// añado el texto al chat activo
-		c.setConversacion(c.getConversacion() +"\n"+ u.getLogin() +": "+ texto);
+		c.setConversacion(c.getConversacion() +"\n"+ u.getLogin() +": "+ texto.texto);
 		// aviso al interlocutor, si está conectado, vía
 		String elOtroDelChat;
 		if(cliente) {
@@ -73,7 +78,10 @@ public class ApiController {
 		}else {
 			elOtroDelChat = c.getCliente().getLogin();
 		}
-		iwSocketHandler.sendText(elOtroDelChat, texto);		
+		String mensaje = u.getLogin() + " dice " + texto.texto;
+		log.info("trying to talk to {}, saying {}",  elOtroDelChat,  mensaje);
+		iwSocketHandler.sendText(elOtroDelChat, mensaje);		
+		iwSocketHandler.sendText(u.getLogin(), mensaje);		
 		return "ok";
 	}
 }

@@ -76,10 +76,10 @@ public class RootController {
 		model.addAttribute("yo", u.getLogin());
 		if(u.getId()== c.getCliente().getId()) {
 			model.addAttribute("cond", false);
-			model.addAttribute("tu", c.getOferta().getSolicitante().getLogin());
+			model.addAttribute("tu", c.getOferta().getSolicitante());
 		}else{
 			model.addAttribute("cond", true);
-			model.addAttribute("tu", c.getCliente().getLogin());
+			model.addAttribute("tu", c.getCliente());
 		}
 		return "chat";
 	}
@@ -156,129 +156,12 @@ public class RootController {
 //				.createQuery("SELECT NVL(AVG(puntuacion),0) \"v\" FROM Valoracion o WHERE o.premiado.id = :userId")
 				.setParameter("userId", u.getId())
 				.getResultList());
-		return "perfil";
-	}
-	
-	
-	/*@GetMapping("/ofertas")
-	public String ofertas(Model model, HttpSession session) {
-		try{
-		Usuario u = (Usuario)session.getAttribute("u");
-		u = (Usuario)entityManager.find(Usuario.class,  u.getId());
-		if(!u.getAbierto()) {return "baneado";}
-		addOfertasToModel(model, u);
-		return "ofertas";
-		}catch (NullPointerException e) {
-			model.addAttribute("ofertas", entityManager
-					.createQuery("SELECT o FROM Oferta o WHERE o.enabled = true")
-					.getResultList());;
-			return "ofertas";
-			
-		}
-	}
-	
-	@PostMapping("/ofertas/{idOferta}")
-	@Transactional
-	public String ofertas(Model model, HttpSession session,   
-			 @PathVariable long idOferta) {
-		Usuario u = (Usuario)session.getAttribute("u");
-		u = (Usuario)entityManager.find(Usuario.class, u.getId());
-		if (!u.getAbierto()) {
-			return "baneado";
-		}
-		
-		Oferta o = (Oferta)entityManager.find(Oferta.class, idOferta);
-		Chat previo = getChat(o.getId(), u.getId());
-		if (previo == null) {
-			Chat c = new Chat();
-			c.setCliente(u);
-			c.setOferta(o);
-			c.setConversacion("cuidado una cabra salida");
-			entityManager.persist(c);
-			entityManager.flush();
-			addChatsToModel(model, u);
-			return "listachats";
-		} else {
-			addChatsToModel(model, u);
-			return "listachats";
-		}
-	}
-	
-	protected void addOfertasToModel(Model model, Usuario u) { // Permite usar las queries en una redirección 
-		log.info("Usuario en ListaChats es {}",  u.getLogin());
-		model.addAttribute("ofertas", entityManager
-				.createQuery("SELECT o FROM Oferta o WHERE o.enabled = true and o.solicitante.id <> :userId")
+		model.addAttribute("vars", entityManager
+				.createQuery("SELECT v FROM Valoracion v WHERE v.premiado.id = :userId")
 				.setParameter("userId", u.getId())
 				.getResultList());
+		return "perfil";
 	}
-	
-	@SuppressWarnings("unchecked")
-	public Chat getChat(long idOferta, long idUsuario) { //Metodo para devolver solo uno o NULL
-		List<Chat> chats = entityManager.createQuery("SELECT o FROM Chat o WHERE o.oferta.enabled = true and o.oferta.id = :ofertaId and o.cliente.id = :userId")
-				.setParameter("ofertaId", idOferta)
-				.setParameter("userId", idUsuario)
-				.getResultList();
-		if (chats.size() > 1) {
-			throw new IllegalArgumentException("Dos chats para el mismo!!!");
-		}
-		return chats.isEmpty() ? null : chats.get(0);
-	}
-	
-	@GetMapping("/crearofertas")
-	public String crearofertas(Model model, HttpSession session) {
-		Usuario u = (Usuario)session.getAttribute("u");
-		u = (Usuario)entityManager.find(Usuario.class,  u.getId());
-		if(!u.getAbierto()) {return "baneado";}
-		model.addAttribute("conectado", u);
-		return "crearofertas";
-	}
-	
-	private java.sql.Date isoDateStringToSqlDate(String iso) throws ParseException {
-		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-        Date parsed = format.parse(iso);
-        java.sql.Date sql = new java.sql.Date(parsed.getTime());
-		return sql;
-	}
-	
-	@PostMapping("/crearofertas")
-	@Transactional
-	public String procesarofertas(Model model, HttpSession session, 
-			@RequestParam String mascotaid, 
-			@RequestParam String zona, 
-			@RequestParam String fechaI, 
-			@RequestParam String fechaF,
-			@RequestParam BigDecimal precio,
-			@RequestParam String nombreTrabajo) {
-		
-		
-		Oferta f = new Oferta();
-		f.setMascota((Mascota)entityManager.find(Mascota.class, Long.parseLong(mascotaid)));
-		try {
-			f.setInicio(isoDateStringToSqlDate(fechaI));
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		f.setZona(zona);
-		try {
-			f.setFin(isoDateStringToSqlDate(fechaF));
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		f.setEnabled(true);
-		Usuario u = (Usuario)session.getAttribute("u");
-		u = (Usuario)entityManager.find(Usuario.class,  u.getId());
-		List<Oferta> fs = u.getOfrecidas();
-		f.setSolicitante(u);
-		f.setPrecio(precio);
-		f.setNombre(nombreTrabajo);
-		fs.add(f);
-		u.setOfrecidas(fs);
-		entityManager.persist(f);
-		
-		return misofertas(model, session);
-	}*/
 	
 	@PostMapping("/crearMascota")
 	@Transactional
@@ -303,19 +186,6 @@ public class RootController {
 		return perfil(model, session);
 	}
 	
-	/*@GetMapping("/misofertas")
-	public String misofertas(Model model, HttpSession session) {
-		Usuario u = (Usuario)session.getAttribute("u");
-		u = (Usuario)entityManager.find(Usuario.class,  u.getId());
-		if(!u.getAbierto()) {return "baneado";}
-		log.info("Usuario es {}",  u.getLogin());
-		model.addAttribute("misofertas", entityManager
-				.createQuery("SELECT o FROM Oferta o WHERE o.solicitante.id = :userId")
-				.setParameter("userId", u.getId())
-				.getResultList());
-		return "misofertas";
-	}
-	*/
 	protected void addChatsToModel(Model model, Usuario u) { //Permite usar las queries en una redirección
 		log.info("Usuario en ListaChats es {}",  u.getLogin());
 		model.addAttribute("poseedorchats", entityManager
@@ -350,127 +220,4 @@ public class RootController {
 		entityManager.persist(o);
 		return "exaltao";
 	}
-	/*
-	@GetMapping("/creardenuncia")
-	public String creardenuncia(Model model, HttpSession session) {
-		Usuario u = (Usuario)session.getAttribute("u");
-		u = (Usuario)entityManager.find(Usuario.class,  u.getId());
-		if(!u.getAbierto()) {return "baneado";}
-		u = (Usuario)entityManager.find(Usuario.class,  u.getId());
-		model.addAttribute("conectado", u);
-		return "creardenuncia";
-	}
-	
-	@PostMapping("/creardenuncia")
-	@Transactional
-	public String procesarofertas(Model model, HttpSession session,   
-			@RequestParam Long ofertaId,
-			@RequestParam String razonInci) {
-		
-		Usuario u = (Usuario)session.getAttribute("u");
-		Denuncia d = new Denuncia();
-		d.setDenunciante(u);
-		Usuario den;
-		
-		Oferta oferta = (Oferta)entityManager.find(Oferta.class, ofertaId);
-		if(oferta.getElegido() != u)
-			den = oferta.getElegido();
-		else 
-			den = oferta.getSolicitante();
-		
-		d.setDenunciado(den);
-		d.setOferta(oferta);
-		d.setDescripcion(razonInci);
-		d.setEnabled(true);
-		entityManager.persist(d);
-		return "indice";
-	}
-	
-	@GetMapping("/segar")
-	public String segar(Model model, HttpSession session) {
-		Usuario u = (Usuario)session.getAttribute("u");
-		u = (Usuario)entityManager.find(Usuario.class,  u.getId());
-		if(!u.getAbierto()) {return "baneado";}
-		if(!u.getRoles().contains("ADMIN")) {
-			return "indice";
-		}
-		log.info("Usuario es {}",  u.getLogin());
-		model.addAttribute("denuncias", entityManager
-				.createQuery("SELECT d FROM Denuncia d where (select abierto from Usuario u where u.id = d.denunciado ) = true")
-				.getResultList());
-		return "segar";
-	}
-	
-	@PostMapping("/segar/{id}")
-	@Transactional
-	@ResponseBody
-	public String procesardenuncias(Model model, HttpSession session,   
-			@PathVariable long id) {
-		
-		Usuario u = (Usuario)entityManager.find(Usuario.class, id);
-		u.setAbierto(false);
-		entityManager.persist(u);
-		return "eliminao";
-	}
-	
-	
-	
-	
-	
-	@GetMapping("/valorar")
-	public String valorar(Model model, HttpSession session) {
-		Usuario u = (Usuario)session.getAttribute("u");
-		u = (Usuario)entityManager.find(Usuario.class,  u.getId());
-		if(!u.getAbierto()) {return "baneado";}
-		log.info("Usuario es {}",  u.getLogin());
-		model.addAttribute("valorar", entityManager
-				.createQuery("SELECT o FROM Oferta o WHERE ((o.solicitante.id = :userId and o.solicitanteV = false) or (o.elegido = :userId and o.elegidoV = false)) and o.enabled = false")
-				.setParameter("userId", u.getId())
-				.getResultList());
-		return "valorar";
-	}
-	
-	@GetMapping("/valorando/{id}")
-	public String valorando(Model model, @PathVariable long id, HttpSession session) {
-		Usuario u = (Usuario)session.getAttribute("u");
-		u = (Usuario)entityManager.find(Usuario.class,  u.getId());
-		if(!u.getAbierto()) {return "baneado";}
-		Oferta o = (Oferta)entityManager.find(Oferta.class,  id);
-		model.addAttribute("conectado", u);
-		model.addAttribute("oferta", o);
-		return "valorando";
-	}
-	
-	@PostMapping("/valorando/{id}")
-	@Transactional
-	public String valorando(Model model, HttpSession session,
-			@PathVariable long id,
-			@RequestParam float valor,
-			@RequestParam String descripcion) {
-		
-		Usuario u = (Usuario)session.getAttribute("u");
-		u = (Usuario)entityManager.find(Usuario.class,  u.getId());
-		if(!u.getAbierto()) {return "baneado";}
-		Valoracion v = new Valoracion();
-		v.setValorador(u);
-		Usuario val;
-		
-		Oferta oferta = (Oferta)entityManager.find(Oferta.class, id);
-		if(oferta.getElegido().getId() != u.getId() 
-				&& oferta.getSolicitante().getId() == u.getId()) {
-			val = oferta.getElegido();
-			oferta.setSolicitanteV(true);
-		} else if (oferta.getElegido().getId() == u.getId() && oferta.getSolicitante().getId() != u.getId()) {
-			val = oferta.getSolicitante();
-			oferta.setElegidoV(true);
-		} else {
-			return "indice";
-		} 
-		
-		v.setPremiado(val);
-		v.setPuntuacion(valor);
-		v.setDescripcion(descripcion);
-		entityManager.persist(v);
-		return valorar(model, session);
-	}*/
 }

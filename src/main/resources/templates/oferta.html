@@ -43,7 +43,7 @@
 			<div><label th:text = "|Hora de finalización: ${o.fin}|">Hora finaliacion: 100</label> </div>
 		</fieldset>
 		<div>
-		<button class = button1>Contactar</button>
+		<td class = "std" th:if="${#authorization.expression('hasRole(''ROLE_USER'') OR hasRole(''ROLE_ADMIN'')')}"><form th:action="@{/ofertas/{idOferta} (idOferta =${o.id})}" method="POST"><button type="submit" th:text="chat">UnId</button></form></td>
 		</div>
  </div>		
 	

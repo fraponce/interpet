@@ -83,6 +83,7 @@ public class ValoracionController {
 		v.setPremiado(val);
 		v.setPuntuacion(valor);
 		v.setDescripcion(descripcion);
+		v.setOferta(oferta);
 		entityManager.persist(v);
 		return valorar(model, session);
 	}

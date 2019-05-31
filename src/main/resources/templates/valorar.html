@@ -36,9 +36,6 @@
         </tr>
     </thead>
     <tbody>
-    <!-- <tr class = "str" th:if="${ofertas.empty}">
-            <td colspan="2"> No hay ofertas </td>
-        </tr> -->
         <tr class = "str" th:each="o: ${valorar}">
         	<td class = "std" th:text=${o.nombre}>UnId</td>
         	<td class = "std"> <a th:href="@{/mascota/{id}(id=${o.mascota.id})}" th:text=${o.mascota.nombre}>UnId</a></td>

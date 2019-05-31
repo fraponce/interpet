@@ -54,6 +54,25 @@
 	        	<!-- Meter el enlace al chat... -->    
 	        </tr>
 		</table>
+		
+		<h2>Valoraciones</h2>
+	  
+	  <table class = "stable">
+	  <tr class = "str">
+	    <th class = "sth">Usuario</th>
+	    <th class = "sth">Trabajo</th>
+	    <th class = "sth">Puntuación</th>
+	    <th class = "sth">Descripcion</th>
+	    
+
+	  </tr>
+ 		<tr class = "str" th:each="z: ${vars}">
+        	<td class = "std"> <a th:href="@{/usuario/{id}(id=${z.valorador.id})}" th:text=${z.valorador.login}>UnId</a></td>
+        	<td class = "std"> <a th:href="@{/oferta/{id}(id=${z.oferta.id})}" th:text=${z.oferta.nombre}>UnId</a></td>
+        	<td class = "std"> <a th:text=${z.puntuacion}>UnId</a></td>
+        	<td class = "std" th:text=${z.descripcion}>UnId</td> <!-- Meter el enlace al chat... -->
+           </tr>
+	  </table>
 
 	</div>
 

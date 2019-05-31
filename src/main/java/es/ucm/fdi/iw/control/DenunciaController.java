@@ -98,25 +98,5 @@ public class DenunciaController {
 		entityManager.persist(u);
 		return "eliminao";
 	}
-	
-	/*
-	@PostMapping("/segar/{id}/{mode}")
-	@Transactional
-	@ResponseBody
-	public String procesardenuncias(Model model, HttpSession session,   
-			@PathVariable long id, @PathVariable boolean d) {
-		if(d) {
-			Usuario u = (Usuario)entityManager.find(Usuario.class, id);
-			u.setAbierto(false);
-			entityManager.persist(u);
-			return "eliminao";
-		}
-		else{
-			Denuncia de = (Denuncia)entityManager.find(Denuncia.class, id);
-			de.setEnabled(false);
-			entityManager.persist(de);
-			return "descartado";
-		}
-	}*/
 
 }

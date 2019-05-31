@@ -86,7 +86,7 @@ public class OfertasController {
 			Chat c = new Chat();
 			c.setCliente(u);
 			c.setOferta(o);
-			c.setConversacion("cuidado una cabra salida");
+			c.setConversacion(u.getLogin() + " está interesado en " + o.getNombre());
 			entityManager.persist(c);
 			entityManager.flush();
 			addChatsToModel(model, u);

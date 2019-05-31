@@ -78,10 +78,21 @@ public class ApiController {
 		}else {
 			elOtroDelChat = c.getCliente().getLogin();
 		}
-		String mensaje = u.getLogin() + " dice " + texto.texto;
-		log.info("trying to talk to {}, saying {}",  elOtroDelChat,  mensaje);
-		iwSocketHandler.sendText(elOtroDelChat, mensaje);		
-		iwSocketHandler.sendText(u.getLogin(), mensaje);		
+		if(c.getOferta().getEnabled()) {
+			String mensaje = u.getLogin() + ": " + texto.texto;
+			log.info("trying to talk to {}, saying {}",  elOtroDelChat,  mensaje);
+			iwSocketHandler.sendText(elOtroDelChat, mensaje);		
+			iwSocketHandler.sendText(u.getLogin(), mensaje);
+		}
 		return "ok";
+	}
+	
+	@PostMapping("/fin/{id}")
+	@Transactional
+	@ResponseBody
+	public void terminarMensaje(HttpSession session, @PathVariable long id) {
+		LineaTexto fin = new LineaTexto();
+		fin.texto = "Oferta finalizada";
+		enviarMensaje(session, id, fin);
 	}
 }

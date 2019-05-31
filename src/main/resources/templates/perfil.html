@@ -26,7 +26,6 @@
 		<fieldset>
 			<div>
 				<label th:text = "|Nombre de usuario: ${conectado.login}|"></label>   
-				 <!-- creo que esto es el nombre de usuario de forma dinamica sec:authentication="name"-->
 			</div>
 			<div>
 				<label th:text = "|Rol de usuario: ${conectado.roles}|">Rol: Rol </label> 
@@ -36,7 +35,7 @@
 			
 		</fieldset>
 		
-		<table class ="stable"> <!--Lo suyo luego, es crear la tabla con los datos de las mascotas del propietario-->
+		<table class ="stable"> 
 			<thead>
 		        <tr class = "str">
 		            <th class = "sth"> Nombre </th>
@@ -49,8 +48,7 @@
 	        	<td class = "std" th:text=${o.nombre}>UnNombre</td>
 	        	<td class = "std" th:text=${o.especie}>UnId</td>
 	        	<td class = "std" th:text=${o.raza}>UnId</td>
-	        	<td class = "std" th:text=${o.descripcion}>UnId</td>
-	        	<!-- Meter el enlace al chat... -->    
+	        	<td class = "std" th:text=${o.descripcion}>UnId</td> 
 	        </tr>
 		</table>
 		<button id="muestraFormularioCrearMascota">Mostar formulario para añadir mascota</button>
@@ -92,8 +90,27 @@
         	<td class = "std" th:text="${application.dateFormatter.format(o.fin)}">UnId</td>
         	<td class = "std" th:text=${o.precio}>UnId</td>
         	<td class = "std" th:text=${o.descripcion}>UnId</td> <!-- Meter el enlace al chat... -->
-           
+           </tr>
 	  </table>
+	  
+	  <h2>Valoraciones</h2>
+	  
+	  <table class = "stable">
+	  <tr class = "str">
+	    <th class = "sth">Usuario</th>
+	    <th class = "sth">Trabajo</th>
+	    <th class = "sth">Puntuación</th>
+	    <th class = "sth">Descripcion</th>
+
+	  </tr>
+ 		<tr class = "str" th:each="z: ${vars}">
+        	<td class = "std"> <a th:href="@{/usuario/{id}(id=${z.valorador.id})}" th:text=${z.valorador.login}>UnId</a></td>
+        	<td class = "std"> <a th:href="@{/oferta/{id}(id=${z.oferta.id})}" th:text=${z.oferta.nombre}>UnId</a></td>
+        	<td class = "std"> <a th:text=${z.puntuacion}>UnId</a></td>
+        	<td class = "std" th:text=${z.descripcion}>UnId</td> <!-- Meter el enlace al chat... -->
+           </tr>
+	  </table>
+	  
 	</div>
 
 </body>

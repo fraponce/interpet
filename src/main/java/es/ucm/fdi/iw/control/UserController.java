@@ -59,21 +59,15 @@ public class UserController {
 				.createQuery("SELECT AVG(o.puntuacion) FROM Valoracion o WHERE o.premiado.id = :userId")
 				.setParameter("userId", id)
 				.getResultList());
+		model.addAttribute("vars", entityManager
+				.createQuery("SELECT v FROM Valoracion v WHERE v.premiado.id = :userId")
+				.setParameter("userId", u.getId())
+				.getResultList());
 		iwSocketHandler.sendText("a", "acaba de entrar " + u.getLogin());
 		
 		return "usuario";
 	}
 	
-	/*@GetMapping("oferta/{id}")
-	public String oferta(Model model, @PathVariable long id, HttpSession session) {
-		Usuario u = (Usuario)session.getAttribute("u");
-		u = (Usuario)entityManager.find(Usuario.class,  u.getId());
-		if(!u.getAbierto()) {return "baneado";}
-		Oferta o = (Oferta)entityManager.find(Oferta.class,  id);
-		iwSocketHandler.sendText("a", "acaba de entrar " + u.getLogin());
-		model.addAttribute("o", entityManager.find(Oferta.class,  id));
-		return "oferta";
-	}*/
 	
 	@GetMapping("mascota/{id}")
 	public String mascota(Model model, @PathVariable long id, HttpSession session) {

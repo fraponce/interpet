@@ -1,6 +1,5 @@
 package es.ucm.fdi.iw.model;
 
-import java.math.BigDecimal;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -14,6 +13,10 @@ public class Valoracion {
 	private Usuario premiado;
 	private Usuario valorador;
 	private float puntuacion;
+	private String descripcion;
+	private Oferta oferta;
+	
+	
 	public float getPuntuacion() {
 		return puntuacion;
 	}
@@ -21,9 +24,6 @@ public class Valoracion {
 	public void setPuntuacion(float valor) {
 		this.puntuacion = valor;
 	}
-
-	private String descripcion;
-
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -43,7 +43,7 @@ public class Valoracion {
 		this.premiado = idDenunciante;
 	}
 	@ManyToOne(targetEntity=Usuario.class)
-	public Usuario getvalorador() {
+	public Usuario getValorador() {
 		return valorador;
 	}
 	
@@ -57,5 +57,14 @@ public class Valoracion {
 
 	public void setDescripcion(String descripcion) {
 		this.descripcion = descripcion;
+	}
+
+	@ManyToOne(targetEntity=Oferta.class)
+	public Oferta getOferta() {
+		return oferta;
+	}
+
+	public void setOferta(Oferta oferta) {
+		this.oferta = oferta;
 	}
 }

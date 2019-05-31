@@ -21,12 +21,13 @@
 	<div class="main">
 	
 		<div class="starter-template">
-			<h1>Chat</h1>
-			<p class="lead">Ejemplo de uso de websockets</p>
-		
-			<textarea id="recibido" cols="80" rows="10"></textarea>
 			<input type="hidden" id="chate" th:value="${chatId}"/>
 			<input type="hidden" id="usuario" th:value="${yo}"/>
+			<h1>Chat con : <a th:href="@{/usuario/{id}(id=${tu.id})}" th:text = "|${tu.login}|"></a></h1>
+			
+		
+			<textarea readonly id="recibido" cols="80" rows="10"></textarea>
+
 			
 			<input id="texto" size="80" 
 				name="texto"
@@ -36,8 +37,6 @@
 		
 		<div>
 			<td class = "std" th:if="${cond}"><button class="okmatic" th:data-target="${chatId}" type="button" onclick="window.location='listachats';" >Aceptar trabajo</button></td>
-			
-			<button class="button2">Añadir a Contactos</button>
 			
 		</div>
 
@@ -96,6 +95,7 @@
     
     function okDeVerdad(e) {
         const okado = e.dataset.target;
+        const chat = document.getElementById("chate").value;
         console.log("okando", e.dataset.target);
        
    		const headers = {
@@ -106,7 +106,12 @@
         fetch(config.exaltarUrl + okado, {
 			method: 'POST',
 			headers: headers,
-		}).then(response => console.log("oferta aceptada"));        
+		}).then(response => console.log("oferta aceptada"));
+        
+        fetch(config.apiUrl + 'fin/' + chat, {
+				method: 'POST',
+				headers: headers,
+			}).then(response => console.log("acabamos la oferta"));
 		return false;       
     }
 	</script>
